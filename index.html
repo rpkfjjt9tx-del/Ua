@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love 🤍</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+overflow:hidden;
+background:black;
+color:white;
+}
+
+.bg{
+position:fixed;
+inset:0;
+background:url('photo2.jpg') center/cover no-repeat;
+z-index:-2;
+}
+
+.dark{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.55);
+backdrop-filter:blur(4px);
+z-index:-1;
+}
+
+.page{
+width:100%;
+height:100vh;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+padding:20px;
+overflow:auto;
+}
+
+.active{display:flex;}
+
+.card{
+width:95%;
+max-width:430px;
+background:rgba(255,255,255,0.12);
+border:1px solid rgba(255,255,255,0.18);
+backdrop-filter:blur(15px);
+padding:30px;
+border-radius:30px;
+text-align:center;
+}
+
+h1{font-size:30px;margin-bottom:15px;}
+p{line-height:1.7;opacity:0.9;}
+
+.btn{
+padding:13px 24px;
+border:none;
+border-radius:18px;
+background:#ffd6e5;
+font-weight:600;
+cursor:pointer;
+margin-top:10px;
+}
+
+.code-box input{
+width:45px;
+height:55px;
+text-align:center;
+font-size:22px;
+border-radius:10px;
+border:none;
+margin:3px;
+}
+
+/* gallery */
+.gallery{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.flip{
+width:140px;
+height:180px;
+perspective:1000px;
+cursor:pointer;
+}
+
+.flip-inner{
+width:100%;
+height:100%;
+transition:0.8s;
+transform-style:preserve-3d;
+position:relative;
+}
+
+.flip.flipped .flip-inner{transform:rotateY(180deg);}
+
+.front,.back{
+position:absolute;
+width:100%;
+height:100%;
+backface-visibility:hidden;
+border-radius:15px;
+overflow:hidden;
+}
+
+.front{
+background:#ffc8da;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+}
+
+.back{
+transform:rotateY(180deg);
+}
+
+.back img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* MUSIC */
+.music-btn{
+position:fixed;
+bottom:20px;
+right:20px;
+z-index:999;
+background:#ffd6e5;
+border:none;
+padding:12px 15px;
+border-radius:30px;
+font-weight:600;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="dark"></div>
+
+<!-- 🎵 BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+<source src="song.mp3" type="audio/mp3">
+</audio>
+
+<button class="music-btn" onclick="toggleMusic()">🎵 Music</button>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+<div class="card">
+<h1>I Belong To You 🤍</h1>
+<p>Something special is waiting for you...</p>
+<button class="btn" onclick="nextPage(2)">Continue</button>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+<div class="card">
+<h1>Enter Love Code 🔐</h1>
+
+<div class="code-box">
+<input maxlength="1"><input maxlength="1"><input maxlength="1">
+<input maxlength="1"><input maxlength="1"><input maxlength="1">
+</div>
+
+<button class="btn" onclick="checkCode()">Unlock</button>
+<p id="msg"></p>
+</div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+<div class="card">
+<h1>First Meet 💖</h1>
+<p>That moment everything started...</p>
+<button class="btn" onclick="nextPage(4)">Next</button>
+</div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4"><div class="card">
+<h1>Our First Talk 💬</h1><button class="btn" onclick="nextPage(5)">Next</button>
+</div></div>
+
+<!-- PAGE 5 -->
+<div class="page" id="page5"><div class="card">
+<h1>First Memory 🤍</h1><button class="btn" onclick="nextPage(6)">Next</button>
+</div></div>
+
+<!-- PAGE 6 -->
+<div class="page" id="page6"><div class="card">
+<h1>Our Bond 🫶</h1><button class="btn" onclick="nextPage(7)">Next</button>
+</div></div>
+
+<!-- PAGE 7 -->
+<div class="page" id="page7"><div class="card">
+<h1>Who Loves More?</h1><button class="btn" onclick="nextPage(8)">Next</button>
+</div></div>
+
+<!-- PAGE 8 -->
+<div class="page" id="page8"><div class="card">
+<h1>Forever 💍</h1><button class="btn" onclick="nextPage(9)">Next</button>
+</div></div>
+
+<!-- PAGE 9 -->
+<div class="page" id="page9"><div class="card">
+<h1>Memories 🤍</h1><button class="btn" onclick="nextPage(10)">Next</button>
+</div></div>
+
+<!-- PAGE 10 -->
+<div class="page" id="page10"><div class="card">
+<h1>Loading Love... 💕</h1><button class="btn" onclick="nextPage(11)">Next</button>
+</div></div>
+
+<!-- PAGE 11 GALLERY (10 PHOTOS) -->
+<div class="page" id="page11">
+<div class="card">
+<h1>Our 3 Years Together 🤍</h1>
+
+<div class="gallery">
+
+<div class="flip" onclick="flip(this)"><div class="flip-inner">
+<div class="front">💖</div><div class="back"><img src="1.jpg"></div>
+</div></div>
+
+<div class="flip" onclick="flip(this)"><div class="flip-inner">
+<div class="front">✨</div><div class="back"><img src="2.jpg"></div>
+</div></div>
+
+<div class="flip" onclick="flip(this)"><div class="flip-inner">
+<div class="front">🤍</div><div class="back"><img src="3.jpg"></div>
+</div></div>
+
+<div class="flip" onclick="flip(this)"><div class="flip-inner">
+<div class="front">🫶</div><div class="back"><img src="4.jpg"></div>
+</div></div>
+
+<div class="flip" onclick="flip(this)"><div class="flip-inner">
+<div class="front">💞</div><div class="back"><img src="5.jpg"></div>
+</div></div>
+
+<div class="flip" onclick="flip(this)"><div class="flip-inner">
+<div class="front">🌙</div><div class="back"><img src="6.jpg"></div>
+</div></div>
+
+<div class="flip" onclick="flip(this)"><div class="flip-inner">
+<div class="front">💫</div><div class="back"><img src="7.png"></div>
+</div></div>
+
+<div class="flip" onclick="flip(this)"><div class="flip-inner">
+<div class="front">🌸</div><div class="back"><img src="8.jpg"></div>
+</div></div>
+
+<div class="flip" onclick="flip(this)"><div class="flip-inner">
+<div class="front">💘</div><div class="back"><img src="9.jpg"></div>
+</div></div>
+
+<div class="flip" onclick="flip(this)"><div class="flip-inner">
+<div class="front">💝</div><div class="back"><img src="10.jpg"></div>
+</div></div>
+
+</div>
+
+<button class="btn" onclick="nextPage(12)">Finish</button>
+</div>
+</div>
+
+<!-- PAGE 12 FINAL -->
+<div class="page" id="page12">
+<div class="card">
+<h1>💌 I Love You Forever</h1>
+
+<p>
+Every moment with you is my favorite story.<br>
+You are my peace, my love, my everything 🤍
+</p>
+
+<button class="btn" onclick="nextPage(1)">Restart</button>
+</div>
+</div>
+
+<!-- MUSIC -->
+<script>
+
+let music=document.getElementById("bgMusic");
+let playing=false;
+
+function toggleMusic(){
+if(music.paused){music.play();playing=true;}
+else{music.pause();playing=false;}
+}
+
+document.body.addEventListener("click",()=>{
+if(!playing){
+music.play();
+playing=true;
+}
+},{once:true});
+
+function nextPage(n){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById("page"+n).classList.add("active");
+}
+
+function checkCode(){
+let code="";
+document.querySelectorAll(".code-box input").forEach(i=>code+=i.value);
+if(code==="051823") nextPage(3);
+else document.getElementById("msg").innerText="Wrong 💔";
+}
+
+function flip(c){
+c.classList.toggle("flipped");
+}
+
+</script>
+
+</body>
+</html>
